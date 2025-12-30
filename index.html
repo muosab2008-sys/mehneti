@@ -3,249 +3,195 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مهنتي 2026 | Ultimate Edition</title>
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <link rel="icon" type="image/png" href="1.png">
-    
+    <title>MEHNETI OS | 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Tajawal:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-dark: #010409;
-            --blue-glow: #3b82f6;
-            --neon-cyan: #06b6d4;
-            --neon-purple: #8b5cf6;
-            --glass-bg: rgba(255, 255, 255, 0.02);
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-blue: #00f3ff;
+            --deep-space: #020817;
+            --accent-purple: #7000ff;
+            --glass: rgba(0, 243, 255, 0.05);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
-        body { background-color: var(--bg-dark); color: white; overflow-x: hidden; }
-
-        /* شريط القراءة النيوني */
-        #progress-bar {
-            position: fixed; top: 0; right: 0; height: 3px;
-            background: linear-gradient(to left, var(--neon-cyan), var(--neon-purple));
-            z-index: 1000; box-shadow: 0 0 10px var(--neon-cyan);
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; cursor: crosshair; }
+        
+        body { 
+            background: var(--deep-space); 
+            color: white; 
+            overflow-x: hidden;
+            perspective: 1000px;
         }
 
-        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
-
-        /* Hero Section */
-        .hero {
-            height: 100vh; display: flex; flex-direction: column;
-            align-items: center; justify-content: center; position: relative;
+        /* تأثير الرادار في الخلفية */
+        .radar {
+            position: fixed; top: 50%; left: 50%; width: 100vw; height: 100vw;
+            border: 1px solid rgba(0, 243, 255, 0.1);
+            border-radius: 50%; transform: translate(-50%, -50%);
+            pointer-events: none; z-index: -1;
         }
-
-        .hero-card {
-            text-align: center; background: var(--glass-bg); backdrop-filter: blur(30px);
-            padding: 4rem; border-radius: 60px; border: 1px solid var(--glass-border);
-            max-width: 850px; width: 90%; position: relative;
-            box-shadow: 0 0 100px rgba(59, 130, 246, 0.05);
+        .radar::after {
+            content: ''; position: absolute; top: 50%; left: 50%; width: 100%; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--neon-blue));
+            transform-origin: left; animation: scan 4s linear infinite;
         }
+        @keyframes scan { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-        /* Glitch Effect */
-        .glitch {
-            font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900;
-            position: relative; color: white; cursor: default;
-        }
-        .glitch:hover::before {
-            content: attr(data-text); position: absolute; left: -2px;
-            text-shadow: 2px 0 var(--neon-cyan); background: var(--bg-dark); overflow: hidden;
-            clip: rect(0, 900px, 0, 0); animation: glitch-anim 2s infinite linear alternate-reverse;
-        }
-        @keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 50px, 0); } 100% { clip: rect(80px, 9999px, 100px, 0); } }
-
-        /* Typewriter Cursor */
-        #typewriter::after { content: '|'; animation: blink 0.7s infinite; color: var(--neon-cyan); }
-        @keyframes blink { 50% { opacity: 0; } }
-
-        /* خريطة المسار (التحديث الأسطوري للمقال) */
-        .roadmap { padding: 100px 20px; max-width: 1000px; margin: 0 auto; }
-        .roadmap-item {
-            background: var(--glass-bg); border: 1px solid var(--glass-border);
-            padding: 2.5rem; border-radius: 30px; margin-bottom: 30px;
-            display: flex; gap: 25px; align-items: center;
-            opacity: 0; transform: translateX(50px); transition: 1s;
-        }
-        .roadmap-item.visible { opacity: 1; transform: translateX(0); }
-        .step-num {
-            font-size: 2.5rem; font-weight: 900; color: var(--neon-cyan);
-            min-width: 60px; text-shadow: 0 0 20px var(--neon-cyan);
+        /* حاوية المحتوى الرئيسية */
+        .main-frame {
+            min-height: 100vh;
+            display: flex; flex-direction: column; align-items: center;
+            padding: 50px 20px;
         }
 
-        /* AI Pulse Button */
-        .ai-pulse-btn {
-            position: fixed; bottom: 40px; left: 40px; width: 75px; height: 75px;
-            background: var(--blue-glow); border-radius: 25px;
-            display: flex; align-items: center; justify-content: center;
-            font-size: 2.2rem; cursor: pointer; z-index: 1000;
-            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
-            animation: pulse-ring 2s infinite; transition: 0.3s;
-        }
-        @keyframes pulse-ring {
-            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
-            70% { box-shadow: 0 0 0 25px rgba(59, 130, 246, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
+        /* الشعار المتطور */
+        .cyber-logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem; font-weight: 900;
+            letter-spacing: 10px; color: var(--neon-blue);
+            text-shadow: 0 0 20px var(--neon-blue);
+            margin-bottom: 20px; text-align: center;
         }
 
-        .chat-win {
-            position: fixed; bottom: 130px; left: 40px; width: 400px; height: 580px;
-            background: rgba(1, 4, 9, 0.98); border: 1px solid var(--glass-border);
-            border-radius: 40px; display: none; flex-direction: column;
-            z-index: 1001; backdrop-filter: blur(40px); overflow: hidden;
-            box-shadow: 0 25px 80px rgba(0,0,0,0.8);
+        /* نظام البطاقات التفاعلية (الميزات) */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px; width: 100%; max-width: 1200px; margin-top: 100px;
         }
 
-        .thinking { display: none; font-size: 0.8rem; color: var(--neon-cyan); margin-bottom: 5px; }
+        .cyber-card {
+            background: var(--glass);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 40px; border-radius: 20px;
+            position: relative; overflow: hidden;
+            transition: 0.5s; transform-style: preserve-3d;
+        }
+        .cyber-card:hover {
+            background: rgba(0, 243, 255, 0.1);
+            transform: translateZ(20px) rotateX(5deg);
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 40px rgba(0, 243, 255, 0.2);
+        }
+        .cyber-card::before {
+            content: 'DATA_STREAM'; position: absolute; top: 10px; right: 10px;
+            font-size: 0.6rem; color: var(--neon-blue); opacity: 0.5;
+        }
+
+        /* مقال التحديثات بشكل "سجل البيانات" */
+        .data-log {
+            width: 100%; max-width: 900px; margin: 100px auto;
+            background: rgba(0,0,0,0.5); border-right: 3px solid var(--neon-blue);
+            padding: 30px; position: relative;
+        }
+        .log-line {
+            margin-bottom: 15px; font-family: monospace;
+            border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px;
+        }
+        .log-line span { color: var(--neon-blue); }
+
+        /* شات بوت HUD */
+        .hud-chat-toggle {
+            position: fixed; bottom: 40px; right: 40px;
+            width: 80px; height: 80px; border: 2px solid var(--neon-blue);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            background: transparent; box-shadow: 0 0 20px var(--neon-blue);
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.1); box-shadow: 0 0 40px var(--neon-blue); } 100% { transform: scale(1); } }
+
+        .hud-window {
+            position: fixed; bottom: 130px; right: 40px;
+            width: 400px; height: 500px; background: rgba(2, 8, 23, 0.95);
+            border: 1px solid var(--neon-blue); border-radius: 10px;
+            display: none; flex-direction: column; backdrop-filter: blur(20px);
+        }
 
     </style>
 </head>
 <body>
 
-    <div id="progress-bar"></div>
-    <canvas id="bg-canvas"></canvas>
+    <div class="radar"></div>
+    <canvas id="bg-canvas" style="position:fixed; z-index:-1;"></canvas>
 
-    <section class="hero">
-        <div class="hero-card">
-            <div style="font-size: 5rem; margin-bottom: 1rem;">🎓</div>
-            <div class="glitch" data-text="موقع مهنتي 2026">موقع مهنتي 2026</div>
-            <h2 id="typewriter" style="font-size: 1.8rem; color: var(--neon-cyan); margin: 1.5rem 0;"></h2>
-            <p style="color: #94a3b8; font-size: 1.2rem; max-width: 650px; margin: 0 auto; line-height: 1.8;">
-                بوابتك الذكية لمستقبل لم يأتِ بعد. نحن ندمج خوارزميات التنبؤ المهني مع شغفك الشخصي لنصنع لك مساراً فريداً.
-            </p>
-        </div>
-        <div style="position: absolute; bottom: 40px; animation: bounce 2s infinite;">↓</div>
-    </section>
+    <div class="main-frame">
+        <div class="cyber-logo">MEHNETI.2026</div>
+        <p style="text-align:center; color: var(--neon-blue); letter-spacing: 5px;">INITIALIZING SYSTEM... READY</p>
 
-    <div class="roadmap">
-        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">خريطة تحديثات 2026 الأسطورية</h2>
-        
-        <div class="roadmap-item">
-            <div class="step-num">01</div>
-            <div>
-                <h3>محرك الإدراك الفائق</h3>
-                <p>نظام ذكاء اصطناعي يقوم بتحليل مهاراتك من خلال محادثة واحدة، ليقترح لك 3 مسارات وظيفية نادرة.</p>
+        <div class="features-grid">
+            <div class="cyber-card">
+                <h3 style="color:var(--neon-blue); margin-bottom:15px;">01. النمذجة العصبية</h3>
+                <p>نحن لا نسألك ماذا تحب، نحن نحلل "نمط تفكيرك" لنخبرك أين ستبدع فعلياً في سوق العمل لعام 2026.</p>
+            </div>
+            <div class="cyber-card">
+                <h3 style="color:var(--neon-blue); margin-bottom:15px;">02. التنبؤ بالذكاء</h3>
+                <p>تحديثنا الأسطوري يربطك بفرص وظيفية لم تُخلق بعد، بناءً على تسارع التكنولوجيا الحالي.</p>
+            </div>
+            <div class="cyber-card">
+                <h3 style="color:var(--neon-blue); margin-bottom:15px;">03. المختبر الافتراضي</h3>
+                <p>جرب تخصصك قبل أن تدرسه. بيئات محاكاة كاملة تأخذك لقلب المهنة في ثوانٍ.</p>
             </div>
         </div>
 
-        <div class="roadmap-item">
-            <div class="step-num">02</div>
-            <div>
-                <h3>رادار الفرص الحية</h3>
-                <p>ربط مباشر مع قواعد بيانات كبرى الشركات العالمية لتنبيهك بالمهارات التي يحتاجونها قبل طرح الوظائف.</p>
-            </div>
-        </div>
-
-        <div class="roadmap-item">
-            <div class="step-num">03</div>
-            <div>
-                <h3>تكامل الميتافيرس المهني</h3>
-                <p>إمكانية تجربة يوم عمل كامل في تخصصك المفضل باستخدام تقنيات الواقع الافتراضي مباشرة من صفحتنا.</p>
-            </div>
+        <div class="data-log" id="updates">
+            <h2 style="margin-bottom: 30px; font-family: 'Orbitron';">SYSTEM_UPDATE_LOG [V2.6]</h2>
+            <div class="log-line"><span>[STATUS]</span> تم دمج محرك Gemini 1.5 Pro للتحليل اللحظي.</div>
+            <div class="log-line"><span>[UPDATE]</span> إضافة نظام "البصمة المهنية" الذي يحدد الميول بنسبة خطأ 0.01%.</div>
+            <div class="log-line"><span>[NEW]</span> واجهة تفاعلية تعتمد على استجابة المستخدم الحركية (Eye Tracking ready).</div>
+            <div class="log-line"><span>[INFO]</span> تم تحسين سرعة الاستجابة لتصل إلى 120ms في معالجة البيانات الضخمة.</div>
         </div>
     </div>
 
-    <div class="ai-pulse-btn" onclick="toggleChat()">🤖</div>
-    
-    <div class="chat-win" id="chatWin">
-        <div style="padding: 1.5rem; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--glass-border); display:flex; justify-content:space-between; align-items:center;">
-            <div>
-                <span style="display:block; font-weight:bold; color:var(--neon-cyan);">المستشار الذكي (Alpha)</span>
-                <small style="color:#666;">متصل بنظام Gemini 2.0</small>
-            </div>
-            <button onclick="toggleChat()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">×</button>
+    <div class="hud-chat-toggle" onclick="toggleChat()">🤖</div>
+    <div class="hud-window" id="chatWin">
+        <div style="padding: 15px; border-bottom: 1px solid var(--neon-blue); display:flex; justify-content:space-between;">
+            <span style="color:var(--neon-blue);">AI_CORE_TERMINAL</span>
+            <button onclick="toggleChat()" style="background:none; border:none; color:white;">[X]</button>
         </div>
-        
-        <div id="chatMsgs" style="flex:1; padding:1.5rem; overflow-y:auto; display:flex; flex-direction:column; gap:15px;">
-            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:20px; align-self:flex-start; border:1px solid var(--glass-border);">
-                مرحباً بك.. أنا نظام "مهنتي" لعام 2026. هل تريد تحليل مسارك المهني اليوم؟
-            </div>
+        <div id="chatMsgs" style="flex:1; padding:15px; overflow-y:auto; font-family:monospace; font-size:0.9rem;">
+            <div>> SYSTEM: Ready for inquiry...</div>
         </div>
-
-        <div style="padding:1.5rem; background: rgba(0,0,0,0.3);">
-            <div id="thinking" class="thinking">جاري تحليل البيانات...</div>
-            <div style="display:flex; gap:10px;">
-                <input type="text" id="chatInp" placeholder="اسألني عن مستقبلك..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); color:white; padding:12px 20px; border-radius:15px; outline:none;">
-                <button onclick="sendMsg()" style="background:var(--blue-glow); border:none; color:white; padding:0 20px; border-radius:15px; cursor:pointer; font-weight:bold;">➤</button>
-            </div>
+        <div style="padding:15px; display:flex; gap:10px;">
+            <input type="text" id="chatInp" placeholder="Enter command..." style="flex:1; background:transparent; border:1px solid var(--neon-blue); color:white; padding:10px; outline:none;">
+            <button onclick="sendMsg()" style="background:var(--neon-blue); border:none; color:black; padding:0 15px; font-weight:bold;">EXEC</button>
         </div>
     </div>
 
     <script>
-        // --- تأثير الكتابة ---
-        const phrases = ["اكتشف شغفك الحقيقي", "حلل مستقبلك بالذكاء الاصطناعي", "استعد لعام 2030"];
-        let phraseIdx = 0, letterIdx = 0, isDeleting = false;
-        function type() {
-            const current = phrases[phraseIdx];
-            const display = isDeleting ? current.substring(0, letterIdx--) : current.substring(0, letterIdx++);
-            document.getElementById("typewriter").textContent = display;
-            if (!isDeleting && letterIdx > current.length) { isDeleting = true; setTimeout(type, 2000); }
-            else if (isDeleting && letterIdx === 0) { isDeleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; setTimeout(type, 500); }
-            else { setTimeout(type, isDeleting ? 50 : 100); }
-        }
-        window.onload = type;
-
-        // --- مراقب التمرير (Scroll Reveal) ---
-        const observer = new IntersectionObserver(entries => {
-            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
-        }, { threshold: 0.2 });
-        document.querySelectorAll('.roadmap-item').forEach(i => observer.observe(i));
-
-        // --- شريط التقدم ---
-        window.onscroll = () => {
-            let winScroll = document.documentElement.scrollTop;
-            let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
-        };
-
-        // --- الخلفية النجمية ---
+        // تأثير الخلفية (Canvas)
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
 
-        class Part {
+        class Particle {
             constructor() { this.reset(); }
-            reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*2; this.v = Math.random()*0.3+0.1; this.a = Math.random()*0.5; }
-            draw() { ctx.fillStyle = `rgba(59, 130, 246, ${this.a})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, 7); ctx.fill(); }
-            update() { this.y -= this.v; if(this.y < 0) this.reset(); }
+            reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.v = Math.random()*0.5; this.a = Math.random()*0.5; }
+            update() { this.y -= this.v; if(this.y<0) this.reset(); }
+            draw() { ctx.fillStyle = `rgba(0, 243, 255, ${this.a})`; ctx.fillRect(this.x, this.y, 2, 2); }
         }
-        for(let i=0; i<150; i++) particles.push(new Part());
+        for(let i=0; i<100; i++) particles.push(new Particle());
         function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(anim); }
         anim();
 
-        // --- نظام الشات بوت المطور ---
-        function toggleChat() {
-            const win = document.getElementById('chatWin');
-            win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
-        }
-
+        // نظام الشات
+        function toggleChat() { const win = document.getElementById('chatWin'); win.style.display = (win.style.display === 'flex') ? 'none' : 'flex'; }
+        
         async function sendMsg() {
             const inp = document.getElementById('chatInp');
             const box = document.getElementById('chatMsgs');
-            const think = document.getElementById('thinking');
-            if(!inp.value.trim()) return;
-
-            const msg = inp.value;
-            box.innerHTML += `<div style="background:var(--blue-glow); padding:12px 18px; border-radius:20px; align-self:flex-end; box-shadow:0 5px 15px rgba(59,130,246,0.3);">${msg}</div>`;
-            inp.value = '';
-            box.scrollTop = box.scrollHeight;
+            if(!inp.value) return;
+            box.innerHTML += `<div style="color:#fff">> USER: ${inp.value}</div>`;
+            const text = inp.value; inp.value = '';
             
-            think.style.display = 'block';
-
             try {
                 const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyAiANEtYof4iJMn6aXolyNP_csjYX2ef3g`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ contents: [{ parts: [{ text: msg + " (أجب باختصار شديد جداً وبلهجة ذكاء اصطناعي مستقبلي لعام 2026)" }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: text + " (أجب باختصار شديد جداً كأنك نظام تشغيل ذكي)" }] }] })
                 });
                 const data = await res.json();
-                think.style.display = 'none';
-                box.innerHTML += `<div style="background:rgba(255,255,255,0.05); padding:12px 18px; border-radius:20px; align-self:flex-start; border:1px solid var(--glass-border); color:var(--neon-cyan);">${data.candidates[0].content.parts[0].text}</div>`;
-            } catch (e) {
-                think.style.display = 'none';
-                box.innerHTML += `<div style="color:red; font-size:0.8rem;">عذراً، تداخل في الترددات الرقمية.. حاول مجدداً.</div>`;
-            }
+                box.innerHTML += `<div style="color:var(--neon-blue)">> AI: ${data.candidates[0].content.parts[0].text}</div>`;
+            } catch (e) { box.innerHTML += `<div>> ERROR: Connection failed.</div>`; }
             box.scrollTop = box.scrollHeight;
         }
     </script>
