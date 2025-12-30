@@ -3,139 +3,100 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مهنتي 2026 | النسخة الأسطورية</title>
+    <title>مهنتي 2026 | Ultimate Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" href="1.png">
+    
     <style>
         :root {
-            --bg-dark: #020617;
-            --blue-primary: #3b82f6;
-            --blue-light: #60a5fa;
-            --neon-purple: #a855f7;
-            --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.1);
+            --bg-dark: #010409;
+            --blue-glow: #3b82f6;
+            --neon-cyan: #06b6d4;
+            --neon-purple: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.02);
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
-        * {
-            margin: 0; padding: 0; box-sizing: border-box;
-            font-family: 'Tajawal', sans-serif;
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: white; overflow-x: hidden; }
 
-        body {
-            background-color: var(--bg-dark);
-            color: white;
-            overflow-x: hidden;
-            line-height: 1.6;
-        }
-
-        /* شريط القراءة العلوي */
+        /* شريط القراءة النيوني */
         #progress-bar {
-            position: fixed; top: 0; right: 0; height: 4px;
-            background: linear-gradient(to left, var(--blue-primary), var(--neon-purple));
-            width: 0%; z-index: 1000; transition: 0.2s;
+            position: fixed; top: 0; right: 0; height: 3px;
+            background: linear-gradient(to left, var(--neon-cyan), var(--neon-purple));
+            z-index: 1000; box-shadow: 0 0 10px var(--neon-cyan);
         }
 
-        #bg-canvas {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1;
-        }
+        #bg-canvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
 
-        /* القسم الرئيسي الأسطوري */
+        /* Hero Section */
         .hero {
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            height: 100vh; display: flex; flex-direction: column;
+            align-items: center; justify-content: center; position: relative;
         }
 
-        .container {
-            text-align: center;
-            background: var(--glass);
-            backdrop-filter: blur(20px);
-            padding: 4rem;
-            border-radius: 50px;
-            border: 1px solid var(--glass-border);
-            max-width: 700px;
-            width: 90%;
-            box-shadow: 0 0 50px rgba(59, 130, 246, 0.15);
-            animation: fadeIn 1.5s ease-out;
+        .hero-card {
+            text-align: center; background: var(--glass-bg); backdrop-filter: blur(30px);
+            padding: 4rem; border-radius: 60px; border: 1px solid var(--glass-border);
+            max-width: 850px; width: 90%; position: relative;
+            box-shadow: 0 0 100px rgba(59, 130, 246, 0.05);
         }
 
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        /* Glitch Effect */
+        .glitch {
+            font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900;
+            position: relative; color: white; cursor: default;
+        }
+        .glitch:hover::before {
+            content: attr(data-text); position: absolute; left: -2px;
+            text-shadow: 2px 0 var(--neon-cyan); background: var(--bg-dark); overflow: hidden;
+            clip: rect(0, 900px, 0, 0); animation: glitch-anim 2s infinite linear alternate-reverse;
+        }
+        @keyframes glitch-anim { 0% { clip: rect(10px, 9999px, 50px, 0); } 100% { clip: rect(80px, 9999px, 100px, 0); } }
 
-        .logo-box {
-            font-size: 6rem;
-            filter: drop-shadow(0 0 30px var(--blue-primary));
-            animation: float 4s ease-in-out infinite;
+        /* Typewriter Cursor */
+        #typewriter::after { content: '|'; animation: blink 0.7s infinite; color: var(--neon-cyan); }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* خريطة المسار (التحديث الأسطوري للمقال) */
+        .roadmap { padding: 100px 20px; max-width: 1000px; margin: 0 auto; }
+        .roadmap-item {
+            background: var(--glass-bg); border: 1px solid var(--glass-border);
+            padding: 2.5rem; border-radius: 30px; margin-bottom: 30px;
+            display: flex; gap: 25px; align-items: center;
+            opacity: 0; transform: translateX(50px); transition: 1s;
+        }
+        .roadmap-item.visible { opacity: 1; transform: translateX(0); }
+        .step-num {
+            font-size: 2.5rem; font-weight: 900; color: var(--neon-cyan);
+            min-width: 60px; text-shadow: 0 0 20px var(--neon-cyan);
         }
 
-        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-25px); } }
-
-        h1 {
-            font-size: 4rem; font-weight: 900; margin: 1rem 0;
-            background: linear-gradient(to bottom, #fff, var(--blue-light));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        /* AI Pulse Button */
+        .ai-pulse-btn {
+            position: fixed; bottom: 40px; left: 40px; width: 75px; height: 75px;
+            background: var(--blue-glow); border-radius: 25px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 2.2rem; cursor: pointer; z-index: 1000;
+            box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7);
+            animation: pulse-ring 2s infinite; transition: 0.3s;
         }
-
-        .scroll-indicator {
-            position: absolute; bottom: 30px; font-size: 2rem;
-            animation: bounce 2s infinite; color: var(--blue-light); opacity: 0.7;
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.7); }
+            70% { box-shadow: 0 0 0 25px rgba(59, 130, 246, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0); }
         }
-
-        @keyframes bounce { 0%, 20%, 50%, 80%, 100% {transform: translateY(0);} 40% {transform: translateY(-10px);} 60% {transform: translateY(-5px);} }
-
-        /* قسم الميزات الأسطورية */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px; width: 90%; max-width: 1200px; margin: 50px auto;
-        }
-
-        .feature-card {
-            background: var(--glass);
-            padding: 2rem; border-radius: 30px;
-            border: 1px solid var(--glass-border);
-            transition: 0.4s; position: relative; overflow: hidden;
-        }
-
-        .feature-card:hover {
-            border-color: var(--blue-primary);
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.2);
-        }
-
-        .feature-card h3 { color: var(--blue-light); margin-bottom: 10px; }
-
-        /* قسم المقال */
-        .article-wrap {
-            max-width: 900px; width: 90%; margin: 100px auto;
-            background: var(--glass); padding: 4rem;
-            border-radius: 40px; border: 1px solid var(--glass-border);
-        }
-
-        .article-content { font-size: 1.2rem; color: #cbd5e1; }
-        .article-content strong { color: var(--blue-light); }
-
-        /* الشات بوت الأسطوري */
-        .chat-btn {
-            position: fixed; bottom: 30px; left: 30px;
-            width: 70px; height: 70px; background: var(--blue-primary);
-            border-radius: 20px; display: flex; align-items: center;
-            justify-content: center; font-size: 2rem; cursor: pointer;
-            z-index: 1000; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
-            transition: 0.3s;
-        }
-        .chat-btn:hover { transform: scale(1.1) rotate(5deg); }
 
         .chat-win {
-            position: fixed; bottom: 110px; left: 30px;
-            width: 380px; height: 500px; background: rgba(2, 6, 23, 0.95);
-            backdrop-filter: blur(20px); border-radius: 30px;
-            border: 1px solid var(--glass-border); display: none;
-            flex-direction: column; z-index: 1000; overflow: hidden;
+            position: fixed; bottom: 130px; left: 40px; width: 400px; height: 580px;
+            background: rgba(1, 4, 9, 0.98); border: 1px solid var(--glass-border);
+            border-radius: 40px; display: none; flex-direction: column;
+            z-index: 1001; backdrop-filter: blur(40px); overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.8);
         }
+
+        .thinking { display: none; font-size: 0.8rem; color: var(--neon-cyan); margin-bottom: 5px; }
+
     </style>
 </head>
 <body>
@@ -144,106 +105,116 @@
     <canvas id="bg-canvas"></canvas>
 
     <section class="hero">
-        <div class="container">
-            <div class="logo-box">🎓</div>
-            <div style="background: rgba(59,130,246,0.1); padding: 5px 20px; border-radius: 50px; display: inline-block; border: 1px solid var(--blue-primary); color: var(--blue-light); font-weight: bold; margin-bottom: 1rem;">0
-                الذكاء المهني 2026
-            </div>
-            <h1>موقع مهنتي</h1>
-            <p style="color: var(--text-gray); font-size: 1.2rem;">نحن لا نتوقع مستقبلك، نحن نرسمه معك بدقة الذكاء الاصطناعي.</p>
+        <div class="hero-card">
+            <div style="font-size: 5rem; margin-bottom: 1rem;">🎓</div>
+            <div class="glitch" data-text="موقع مهنتي 2026">موقع مهنتي 2026</div>
+            <h2 id="typewriter" style="font-size: 1.8rem; color: var(--neon-cyan); margin: 1.5rem 0;"></h2>
+            <p style="color: #94a3b8; font-size: 1.2rem; max-width: 650px; margin: 0 auto; line-height: 1.8;">
+                بوابتك الذكية لمستقبل لم يأتِ بعد. نحن ندمج خوارزميات التنبؤ المهني مع شغفك الشخصي لنصنع لك مساراً فريداً.
+            </p>
         </div>
-        <div class="scroll-indicator">↓</div>
+        <div style="position: absolute; bottom: 40px; animation: bounce 2s infinite;">↓</div>
     </section>
 
-    <div class="features-grid">
-        <div class="feature-card">
-            <h3>🧬 البصمة المهنية</h3>
-            <p>تحليل عميق للميول يحدد تخصصك الجامعي بدقة 99%.</p>
+    <div class="roadmap">
+        <h2 style="text-align: center; font-size: 2.5rem; margin-bottom: 3rem;">خريطة تحديثات 2026 الأسطورية</h2>
+        
+        <div class="roadmap-item">
+            <div class="step-num">01</div>
+            <div>
+                <h3>محرك الإدراك الفائق</h3>
+                <p>نظام ذكاء اصطناعي يقوم بتحليل مهاراتك من خلال محادثة واحدة، ليقترح لك 3 مسارات وظيفية نادرة.</p>
+            </div>
         </div>
-        <div class="feature-card">
-            <h3>🌩️ التنبؤ بالسوق</h3>
-            <p>معرفة الوظائف الأكثر طلباً في عام 2030 قبل الجميع.</p>
+
+        <div class="roadmap-item">
+            <div class="step-num">02</div>
+            <div>
+                <h3>رادار الفرص الحية</h3>
+                <p>ربط مباشر مع قواعد بيانات كبرى الشركات العالمية لتنبيهك بالمهارات التي يحتاجونها قبل طرح الوظائف.</p>
+            </div>
         </div>
-        <div class="feature-card">
-            <h3>🤖 رفيق الدرب</h3>
-            <p>بوت ذكي يرافقك طوال سنوات دراستك لضمان نجاحك.</p>
+
+        <div class="roadmap-item">
+            <div class="step-num">03</div>
+            <div>
+                <h3>تكامل الميتافيرس المهني</h3>
+                <p>إمكانية تجربة يوم عمل كامل في تخصصك المفضل باستخدام تقنيات الواقع الافتراضي مباشرة من صفحتنا.</p>
+            </div>
         </div>
     </div>
 
-    <section class="article-wrap" id="article">
-        <h2 style="font-size: 2.5rem; margin-bottom: 2rem; border-right: 5px solid var(--blue-primary); padding-right: 20px;">
-            تحديثات مهنتي الأسطورية 2026
-        </h2>
-        <div class="article-content">
-            <p>أهلاً بكم في المستقبل. في هذا التحديث، قمنا بدمج <strong>محرك الإدراك الفائق</strong> الذي يسمح للمنصة ليس فقط بفهم مهاراتك، بل بتحليل شغفك الكامن.</p>
-            <br>
-            <p>لقد انتقلنا إلى بروتوكول <strong>Hyper-Fast API</strong> الذي يجعل المحادثة مع المستشار الذكي تبدو وكأنك تتحدث مع إنسان حقيقي، بفضل سرعة استجابة لا تتعدى 200 جزء من الثانية.</p>
-            <br>
-            <p>تحديثنا القادم سيتضمن <strong>الواقع المدمج</strong>، حيث ستتمكن من رؤية بيئة عملك المستقبلية عبر نظارات AR مباشرة من خلال موقعنا.</p>
-        </div>
-    </section>
-
-    <div class="chat-btn" onclick="toggleChat()">🤖</div>
+    <div class="ai-pulse-btn" onclick="toggleChat()">🤖</div>
+    
     <div class="chat-win" id="chatWin">
-        <div style="padding: 1.5rem; background: var(--glass); border-bottom: 1px solid var(--glass-border); display: flex; justify-content: space-between;">
-            <span>المستشار الذكي v2.6</span>
-            <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer;">✕</button>
+        <div style="padding: 1.5rem; background: rgba(255,255,255,0.03); border-bottom: 1px solid var(--glass-border); display:flex; justify-content:space-between; align-items:center;">
+            <div>
+                <span style="display:block; font-weight:bold; color:var(--neon-cyan);">المستشار الذكي (Alpha)</span>
+                <small style="color:#666;">متصل بنظام Gemini 2.0</small>
+            </div>
+            <button onclick="toggleChat()" style="background:none; border:none; color:white; font-size:1.5rem; cursor:pointer;">×</button>
         </div>
-        <div id="chatMsgs" style="flex: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
-            <div style="background: var(--glass); padding: 10px 15px; border-radius: 15px; align-self: flex-start;">مرحباً بك في عصر التوجيه الجديد. كيف يمكنني خدمتك؟</div>
+        
+        <div id="chatMsgs" style="flex:1; padding:1.5rem; overflow-y:auto; display:flex; flex-direction:column; gap:15px;">
+            <div style="background:rgba(255,255,255,0.05); padding:15px; border-radius:20px; align-self:flex-start; border:1px solid var(--glass-border);">
+                مرحباً بك.. أنا نظام "مهنتي" لعام 2026. هل تريد تحليل مسارك المهني اليوم؟
+            </div>
         </div>
-        <div style="padding: 1rem; display: flex; gap: 10px;">
-            <input type="text" id="chatInp" placeholder="اسأل عن مستقبلك..." style="flex: 1; background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 10px; border-radius: 10px; outline: none;">
-            <button onclick="sendMsg()" style="background: var(--blue-primary); border: none; color: white; padding: 0 15px; border-radius: 10px; cursor: pointer;">➤</button>
+
+        <div style="padding:1.5rem; background: rgba(0,0,0,0.3);">
+            <div id="thinking" class="thinking">جاري تحليل البيانات...</div>
+            <div style="display:flex; gap:10px;">
+                <input type="text" id="chatInp" placeholder="اسألني عن مستقبلك..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--glass-border); color:white; padding:12px 20px; border-radius:15px; outline:none;">
+                <button onclick="sendMsg()" style="background:var(--blue-glow); border:none; color:white; padding:0 20px; border-radius:15px; cursor:pointer; font-weight:bold;">➤</button>
+            </div>
         </div>
     </div>
 
     <script>
+        // --- تأثير الكتابة ---
+        const phrases = ["اكتشف شغفك الحقيقي", "حلل مستقبلك بالذكاء الاصطناعي", "استعد لعام 2030"];
+        let phraseIdx = 0, letterIdx = 0, isDeleting = false;
+        function type() {
+            const current = phrases[phraseIdx];
+            const display = isDeleting ? current.substring(0, letterIdx--) : current.substring(0, letterIdx++);
+            document.getElementById("typewriter").textContent = display;
+            if (!isDeleting && letterIdx > current.length) { isDeleting = true; setTimeout(type, 2000); }
+            else if (isDeleting && letterIdx === 0) { isDeleting = false; phraseIdx = (phraseIdx + 1) % phrases.length; setTimeout(type, 500); }
+            else { setTimeout(type, isDeleting ? 50 : 100); }
+        }
+        window.onload = type;
+
+        // --- مراقب التمرير (Scroll Reveal) ---
+        const observer = new IntersectionObserver(entries => {
+            entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.2 });
+        document.querySelectorAll('.roadmap-item').forEach(i => observer.observe(i));
+
         // --- شريط التقدم ---
-        window.onscroll = function() {
-            let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+        window.onscroll = () => {
+            let winScroll = document.documentElement.scrollTop;
             let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-            let scrolled = (winScroll / height) * 100;
-            document.getElementById("progress-bar").style.width = scrolled + "%";
+            document.getElementById("progress-bar").style.width = (winScroll / height) * 100 + "%";
         };
 
-        // --- الخلفية (Canvas) ---
+        // --- الخلفية النجمية ---
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
-        window.addEventListener('resize', resize);
-        resize();
+        window.addEventListener('resize', resize); resize();
 
-        class Particle {
+        class Part {
             constructor() { this.reset(); }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 3 + 0.5;
-                this.speed = Math.random() * 0.5 + 0.2;
-                this.alpha = Math.random() * 0.5;
-            }
-            draw() {
-                ctx.fillStyle = `rgba(59, 130, 246, ${this.alpha})`;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-            update() {
-                this.y -= this.speed;
-                if (this.y < 0) this.reset();
-            }
+            reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*2; this.v = Math.random()*0.3+0.1; this.a = Math.random()*0.5; }
+            draw() { ctx.fillStyle = `rgba(59, 130, 246, ${this.a})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, 7); ctx.fill(); }
+            update() { this.y -= this.v; if(this.y < 0) this.reset(); }
         }
-        for(let i=0; i<150; i++) particles.push(new Particle());
-        function animate() {
-            ctx.clearRect(0,0,canvas.width, canvas.height);
-            particles.forEach(p => { p.update(); p.draw(); });
-            requestAnimationFrame(animate);
-        }
-        animate();
+        for(let i=0; i<150; i++) particles.push(new Part());
+        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(anim); }
+        anim();
 
-        // --- نظام الشات ---
+        // --- نظام الشات بوت المطور ---
         function toggleChat() {
             const win = document.getElementById('chatWin');
             win.style.display = (win.style.display === 'flex') ? 'none' : 'flex';
@@ -252,26 +223,31 @@
         async function sendMsg() {
             const inp = document.getElementById('chatInp');
             const box = document.getElementById('chatMsgs');
+            const think = document.getElementById('thinking');
             if(!inp.value.trim()) return;
-            
+
             const msg = inp.value;
-            box.innerHTML += `<div style="background: var(--blue-primary); padding: 10px 15px; border-radius: 15px; align-self: flex-end;">${msg}</div>`;
+            box.innerHTML += `<div style="background:var(--blue-glow); padding:12px 18px; border-radius:20px; align-self:flex-end; box-shadow:0 5px 15px rgba(59,130,246,0.3);">${msg}</div>`;
             inp.value = '';
+            box.scrollTop = box.scrollHeight;
             
+            think.style.display = 'block';
+
             try {
                 const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyAiANEtYof4iJMn6aXolyNP_csjYX2ef3g`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ contents: [{ parts: [{ text: msg + " (رد كخبير مهني لسنة 2026 باختصار)" }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: msg + " (أجب باختصار شديد جداً وبلهجة ذكاء اصطناعي مستقبلي لعام 2026)" }] }] })
                 });
                 const data = await res.json();
-                box.innerHTML += `<div style="background: var(--glass); padding: 10px 15px; border-radius: 15px; align-self: flex-start; border: 1px solid var(--glass-border);">${data.candidates[0].content.parts[0].text}</div>`;
+                think.style.display = 'none';
+                box.innerHTML += `<div style="background:rgba(255,255,255,0.05); padding:12px 18px; border-radius:20px; align-self:flex-start; border:1px solid var(--glass-border); color:var(--neon-cyan);">${data.candidates[0].content.parts[0].text}</div>`;
             } catch (e) {
-                box.innerHTML += `<div style="background: var(--glass); padding: 10px 15px; border-radius: 15px; align-self: flex-start;">النظام تحت التحديث لعام 2026...</div>`;
+                think.style.display = 'none';
+                box.innerHTML += `<div style="color:red; font-size:0.8rem;">عذراً، تداخل في الترددات الرقمية.. حاول مجدداً.</div>`;
             }
             box.scrollTop = box.scrollHeight;
         }
-        document.getElementById('chatInp').addEventListener('keypress', (e) => { if(e.key === 'Enter') sendMsg(); });
     </script>
 </body>
 </html>
