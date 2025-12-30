@@ -3,209 +3,182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مهنتي 2026 | النسخة الاحترافية</title>
+    <title>مهنتي 2026 | Professional Edition</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #3b82f6;
-            --accent: #60a5fa;
             --bg-dark: #020617;
-            --glass: rgba(255, 255, 255, 0.03);
+            --glass-white: rgba(255, 255, 255, 0.05);
             --border: rgba(255, 255, 255, 0.1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
-        body { background-color: var(--bg-dark); color: white; overflow-x: hidden; scroll-behavior: smooth; }
+        body { background-color: var(--bg-dark); color: white; overflow-x: hidden; scroll-behavior: smooth; line-height: 1.6; }
 
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+        canvas { position: fixed; top: 0; left: 0; z-index: -1; }
 
-        /* الهيكل الرئيسي */
+        /* الهيرو - تصميم نظيف وعصري */
         .hero {
-            height: 100vh; display: flex; align-items: center; justify-content: center;
-            text-align: center; padding: 20px;
+            height: 90vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 0 20px;
         }
 
-        .main-container {
-            background: var(--glass); backdrop-filter: blur(20px);
-            padding: 4rem; border-radius: 50px; border: 1px solid var(--border);
-            max-width: 900px; width: 100%; box-shadow: 0 0 100px rgba(0,0,0,0.5);
+        .hero h1 { 
+            font-size: clamp(2.5rem, 8vw, 5rem); font-weight: 900; margin-bottom: 20px;
+            letter-spacing: -1px; animation: fadeInUp 1s ease-out;
         }
 
-        .logo { font-size: 6rem; filter: drop-shadow(0 0 20px var(--primary)); animation: float 4s infinite ease-in-out; }
-        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
-
-        h1 { font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem; background: linear-gradient(to bottom, #fff, var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-        /* قسم شرح الميزات الاحترافي */
-        .features-section { padding: 100px 20px; max-width: 1200px; margin: 0 auto; }
-        .feature-box {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px;
+        .hero p { 
+            font-size: 1.4rem; color: #94a3b8; max-width: 700px; 
+            animation: fadeInUp 1.2s ease-out;
         }
+
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* شبكة الميزات الاحترافية */
+        .features-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px; max-width: 1200px; margin: 0 auto 100px; padding: 0 20px;
+        }
+
         .feature-card {
-            background: var(--glass); padding: 30px; border-radius: 30px; border: 1px solid var(--border);
-            transition: 0.4s; position: relative;
+            background: var(--glass-white); border: 1px solid var(--border);
+            padding: 45px; border-radius: 40px; backdrop-filter: blur(15px);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); position: relative;
         }
-        .feature-card:hover { transform: scale(1.05); border-color: var(--primary); background: rgba(59, 130, 246, 0.05); }
-        .feature-card h3 { color: var(--accent); margin-bottom: 15px; font-size: 1.5rem; }
-        .feature-card p { color: #cbd5e1; font-size: 1rem; line-height: 1.7; }
 
-        /* قسم المقال التفاعلي (مختبر التحديثات) */
-        .article-lab {
-            max-width: 1000px; margin: 50px auto; background: var(--glass);
-            border-radius: 40px; border: 1px solid var(--border); overflow: hidden;
+        .feature-card:hover {
+            transform: translateY(-10px); border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(59, 130, 246, 0.1);
+            background: rgba(59, 130, 246, 0.03);
         }
-        .tab-headers { display: flex; background: rgba(0,0,0,0.2); }
-        .tab-btn {
-            flex: 1; padding: 20px; border: none; background: none; color: white;
-            font-weight: bold; cursor: pointer; transition: 0.3s; font-size: 1.1rem;
-        }
-        .tab-btn.active { background: var(--primary); text-shadow: 0 0 10px white; }
-        .tab-content { padding: 40px; display: none; animation: fadeIn 0.5s; }
-        .tab-content.active { display: block; }
 
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        .feature-icon { font-size: 3.5rem; margin-bottom: 20px; display: block; }
+        .feature-card h3 { font-size: 1.8rem; margin-bottom: 15px; color: white; }
+        .feature-card p { color: #94a3b8; font-size: 1.1rem; }
 
-        /* الشات بوت */
-        .chat-widget {
-            position: fixed; bottom: 30px; left: 30px; z-index: 1000;
+        /* قسم المقال - لوحات المعلومات */
+        .article-section { max-width: 1000px; margin: 100px auto; padding: 0 20px; }
+        .info-panel {
+            background: var(--glass-white); border: 1px solid var(--border);
+            padding: 50px; border-radius: 50px; margin-bottom: 40px;
+            position: relative; overflow: hidden;
         }
+        .info-panel::before {
+            content: ''; position: absolute; top: 0; right: 0; width: 5px; height: 100%; background: var(--primary);
+        }
+        .info-panel h2 { font-size: 2.2rem; margin-bottom: 25px; color: var(--primary); }
+        .info-panel p { font-size: 1.25rem; color: #cbd5e1; margin-bottom: 20px; text-align: justify; }
+
+        /* الشات بوت - تصميم زر دائري كلاسيكي */
         .chat-btn {
-            width: 70px; height: 70px; background: var(--primary); border-radius: 25px;
-            display: flex; align-items: center; justify-content: center; font-size: 2rem;
-            cursor: pointer; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+            position: fixed; bottom: 30px; left: 30px; width: 65px; height: 65px;
+            background: var(--primary); border-radius: 50%; display: flex;
+            align-items: center; justify-content: center; font-size: 1.8rem;
+            cursor: pointer; box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
+            z-index: 1000; transition: 0.3s;
         }
-        .chat-window {
-            position: absolute; bottom: 85px; left: 0; width: 350px; height: 500px;
+        .chat-btn:hover { transform: rotate(15deg) scale(1.1); }
+
+        .chat-win {
+            position: fixed; bottom: 110px; left: 30px; width: 380px; height: 550px;
             background: #0f172a; border: 1px solid var(--border); border-radius: 30px;
-            display: none; flex-direction: column; overflow: hidden;
+            display: none; flex-direction: column; box-shadow: 0 20px 50px rgba(0,0,0,0.5); z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-    <canvas id="bg-canvas"></canvas>
+    <canvas id="stars"></canvas>
 
     <section class="hero">
-        <div class="main-container">
-            <div class="logo">🎓</div>
-            <h1>مهنتي الذكي 2026</h1>
-            <p style="color: #94a3b8; font-size: 1.2rem; margin-bottom: 2rem;">أكبر تحديث في تاريخ التوجيه المهني العربي</p>
-            <a href="#more" style="background: var(--primary); color: white; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-weight: bold; transition: 0.3s;">ابدأ الاستكشاف</a>
+        <h1>موقع مهنتي 2026</h1>
+        <p>نظام التوجيه المهني الأكثر تقدماً في الوطن العربي، مدعوم بأحدث تقنيات الذكاء الاصطناعي التوليدي.</p>
+    </section>
+
+    <div class="features-grid">
+        <div class="feature-card">
+            <span class="feature-icon">🧠</span>
+            <h3>تحليل الميول العميق</h3>
+            <p>نستخدم خوارزميات عصبية لتحليل شخصيتك وربطها بمهن المستقبل، مما يضمن توافقاً وظيفياً بنسبة 98%.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">🚀</span>
+            <h3>تنبؤات سوق 2030</h3>
+            <p>لا نبحث في وظائف اليوم، بل نوجهك نحو التخصصات التي ستشهد أعلى طلب عالمي في العقد القادم.</p>
+        </div>
+        <div class="feature-card">
+            <span class="feature-icon">💎</span>
+            <h3>استشارات ذكية 24/7</h3>
+            <p>مساعدك المهني الخاص متوفر دائماً للإجابة على تساؤلاتك حول الجامعات، المسارات، والرواتب المتوقعة.</p>
+        </div>
+    </div>
+
+    <section class="article-section">
+        <div class="info-panel">
+            <h2>رؤية مهنتي للتغيير</h2>
+            <p>في عام 2026، نهدف إلى سد الفجوة بين التعليم الأكاديمي والاحتياجات الفعلية لسوق العمل. منصتنا تقوم بمعالجة ملايين البيانات المهنية لتقديم خريطة طريق واضحة لكل طالب.</p>
+            <p>لقد دمجنا تقنيات <strong>Large Language Models</strong> لتوفير تجربة محادثة بشرية تماماً، تساعد الطالب على استكشاف شغفه دون تعقيدات النماذج الورقية القديمة.</p>
+        </div>
+
+        <div class="info-panel">
+            <h2>التقنيات والمستقبل</h2>
+            <p>تعتمد "مهنتي" على معالجة البيانات الضخمة (Big Data) لتقديم مقارنات حية بين الرواتب والفرص المتاحة في مختلف الدول العربية والعالمية.</p>
+            <p>التحديث القادم سيشمل <strong>VR Career Tours</strong>، لتمكين الطلاب من زيارة مقار عملهم المستقبلية افتراضياً.</p>
         </div>
     </section>
 
-    <section class="features-section" id="more">
-        <h2 style="text-align: center; margin-bottom: 50px; font-size: 2.5rem;">لماذا "مهنتي 2026" مختلف؟</h2>
-        <div class="feature-box">
-            <div class="feature-card">
-                <h3>🧠 الذكاء التوليدي (AI)</h3>
-                <p>شرح: لا نعتمد على نماذج ثابتة، بل نستخدم <strong>Gemini 1.5 Pro</strong> لتحليل شخصيتك عبر محادثة طبيعية، وفهم مواهبك المخفية التي قد لا تلاحظها أنت بنفسك.</p>
-            </div>
-            <div class="feature-card">
-                <h3>📊 رصد السوق اللحظي</h3>
-                <p>شرح: نظامنا مرتبط بـ APIs عالمية تدرس توجهات التوظيف في الشرق الأوسط وأوروبا، ليعطيك تخصصاً لن يموت في عصر الأتمتة.</p>
-            </div>
-            <div class="feature-card">
-                <h3>🎮 المحاكاة المهنية</h3>
-                <p>شرح: نوفر لك تجربة "يوم في حياة موظف"، حيث يمكنك عبر الموقع محاكاة مهام تخصصات مثل البرمجة، التصميم، أو الهندسة قبل أن تقرر دراستها.</p>
-            </div>
+    <div class="chat-btn" onclick="toggleChat()">🤖</div>
+    <div class="chat-win" id="chatWin">
+        <div style="padding: 20px; background: var(--primary); font-weight: bold; display: flex; justify-content: space-between; border-radius: 30px 30px 0 0;">
+            <span>مساعد مهنتي v2.6</span>
+            <span onclick="toggleChat()" style="cursor:pointer">✕</span>
         </div>
-    </section>
-
-    <section class="article-lab">
-        <div class="tab-headers">
-            <button class="tab-btn active" onclick="openTab(event, 'vision')">رؤيتنا</button>
-            <button class="tab-btn" onclick="openTab(event, 'tech')">التقنية المستخدمة</button>
-            <button class="tab-btn" onclick="openTab(event, 'future')">خطة 2027</button>
+        <div id="chatMsgs" style="flex:1; padding:20px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
+            <div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:15px; align-self:flex-start;">أهلاً بك، أنا هنا لإرشادك مهنياً. ما هو تساؤلك؟</div>
         </div>
-
-        <div id="vision" class="tab-content active">
-            <h2>ثورة في مفهوم اختيار المستقبل</h2>
-            <br>
-            <p>في تحديث 2026، نؤمن أن الطالب ليس مجرد "مجموع درجات"، بل هو طاقة إبداعية. هدفنا هو تقليل نسبة الفشل الوظيفي من خلال وضع الشخص المناسب في المكان المناسب باستخدام العلم والبيانات.</p>
-            <br>
-            <p>لقد أضفنا ميزة <strong>"التوجيه العاطفي"</strong>، حيث يستطيع النظام استشعار نبرة كتابة الطالب ليعرف مدى حماسه أو قلقه تجاه تخصص معين.</p>
-        </div>
-
-        <div id="tech" class="tab-content">
-            <h2>محرك تقني فائق القدرة</h2>
-            <br>
-            <p>تم بناء النسخة الجديدة باستخدام معمارية <strong>Microservices</strong> لضمان سرعة فائقة. نستخدم تقنيات "الواقع المعزز" (WebAR) لعرض إحصائيات المهن بشكل ثلاثي الأبعاد فوق هاتفك.</p>
-            <br>
-            <p>أمان البيانات هو أولويتنا، حيث يتم تشفير جميع محادثاتك مع المستشار الذكي بتقنيات End-to-End.</p>
-        </div>
-
-        <div id="future" class="tab-content">
-            <h2>ماذا بعد؟</h2>
-            <br>
-            <p>نعمل حالياً على دمج "الواقع الافتراضي الكامل" (Full VR) حيث ستتمكن من حضور محاضرات جامعية تجريبية في أي جامعة حول العالم من خلال منصة مهنتي فقط.</p>
-        </div>
-    </section>
-
-    <div class="chat-widget">
-        <div class="chat-btn" onclick="toggleChat()">🤖</div>
-        <div class="chat-window" id="chatWin">
-            <div style="padding: 20px; background: var(--primary); display: flex; justify-content: space-between;">
-                <span>المستشار الذكي v2.6</span>
-                <button onclick="toggleChat()" style="background:none; border:none; color:white; cursor:pointer;">✕</button>
-            </div>
-            <div id="chatMsgs" style="flex:1; padding:15px; overflow-y:auto; display:flex; flex-direction:column; gap:10px;">
-                <div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:15px; align-self:flex-start;">مرحباً بك في مختبر مهنتي. كيف أساعدك اليوم؟</div>
-            </div>
-            <div style="padding:15px; background:rgba(0,0,0,0.2); display:flex; gap:10px;">
-                <input type="text" id="chatInp" placeholder="اسأل عن مستقبلك..." style="flex:1; background:none; border:1px solid var(--border); color:white; padding:10px; border-radius:10px;">
-                <button onclick="sendMsg()" style="background:var(--primary); border:none; color:white; padding:0 15px; border-radius:10px; cursor:pointer;">➤</button>
-            </div>
+        <div style="padding:15px; display:flex; gap:10px;">
+            <input type="text" id="chatInp" placeholder="اكتب سؤالك..." style="flex:1; background:rgba(255,255,255,0.05); border:1px solid var(--border); color:white; padding:12px; border-radius:15px; outline:none;">
+            <button onclick="sendMsg()" style="background:var(--primary); border:none; color:white; padding:0 20px; border-radius:15px; cursor:pointer;">➤</button>
         </div>
     </div>
 
     <script>
-        // --- إدارة التبويبات ---
-        function openTab(evt, tabName) {
-            var i, tabcontent, tablinks;
-            tabcontent = document.getElementsByClassName("tab-content");
-            for (i = 0; i < tabcontent.length; i++) tabcontent[i].style.display = "none";
-            tablinks = document.getElementsByClassName("tab-btn");
-            for (i = 0; i < tablinks.length; i++) tablinks[i].className = tablinks[i].className.replace(" active", "");
-            document.getElementById(tabName).style.display = "block";
-            evt.currentTarget.className += " active";
-        }
-
-        // --- الخلفية النجمية ---
-        const canvas = document.getElementById('bg-canvas');
+        // خلفية النجوم المتحركة الهادئة
+        const canvas = document.getElementById('stars');
         const ctx = canvas.getContext('2d');
         let particles = [];
         function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         window.addEventListener('resize', resize); resize();
 
-        class Particle {
+        class Star {
             constructor() { this.reset(); }
-            reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*2; this.v = Math.random()*0.5; this.a = Math.random()*0.5; }
+            reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*1.5; this.v = Math.random()*0.3; }
             update() { this.y -= this.v; if(this.y < 0) this.reset(); }
-            draw() { ctx.fillStyle = `rgba(96, 165, 250, ${this.a})`; ctx.beginPath(); ctx.arc(this.x, this.y, this.s, 0, Math.PI*2); ctx.fill(); }
+            draw() { ctx.fillStyle = 'rgba(255,255,255,0.3)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,7); ctx.fill(); }
         }
-        for(let i=0; i<100; i++) particles.push(new Particle());
-        function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animate); }
-        animate();
+        for(let i=0; i<100; i++) particles.push(new Star());
+        function anim() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(anim); }
+        anim();
 
-        // --- نظام الشات ---
-        function toggleChat() { const win = document.getElementById('chatWin'); win.style.display = (win.style.display === 'flex') ? 'none' : 'flex'; }
+        // نظام الشات
+        function toggleChat() { const win = document.getElementById('chatWin'); win.style.display = (win.style.display==='flex')?'none':'flex'; }
         async function sendMsg() {
             const inp = document.getElementById('chatInp');
             const box = document.getElementById('chatMsgs');
-            if(!inp.value.trim()) return;
-            const msg = inp.value;
-            box.innerHTML += `<div style="background:var(--primary); padding:10px; border-radius:15px; align-self:flex-end;">${msg}</div>`;
-            inp.value = '';
+            if(!inp.value) return;
+            box.innerHTML += `<div style="background:var(--primary); padding:12px; border-radius:15px; align-self:flex-end;">${inp.value}</div>`;
+            const text = inp.value; inp.value = '';
             try {
-                const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=YOUR_API_KEY`, {
+                const res = await fetch(`https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=AIzaSyAiANEtYof4iJMn6aXolyNP_csjYX2ef3g`, {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ contents: [{ parts: [{ text: msg + " (أجب باختصار كخبير مهني)" }] }] })
+                    body: JSON.stringify({ contents: [{ parts: [{ text: text + " (أجب باختصار كخبير مهني)" }] }] })
                 });
                 const data = await res.json();
-                box.innerHTML += `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:15px; align-self:flex-start;">${data.candidates[0].content.parts[0].text}</div>`;
-            } catch (e) { box.innerHTML += `<div style="background:rgba(255,255,255,0.05); padding:10px; border-radius:15px; align-self:flex-start;">النظام تحت التحديث..</div>`; }
+                box.innerHTML += `<div style="background:rgba(255,255,255,0.05); padding:12px; border-radius:15px; align-self:flex-start;">${data.candidates[0].content.parts[0].text}</div>`;
+            } catch (e) { box.innerHTML += `<div>خطأ في الاتصال..</div>`; }
             box.scrollTop = box.scrollHeight;
         }
     </script>
