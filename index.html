@@ -3,204 +3,139 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مهنتي 2026 | المنصة الذكية</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>مهنتي 2026 | النسخة الملكية</title>
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
-    
+     <link rel="icon" type="image/png" href="1.png">
     <style>
-        /* إضافة متغيرات الألوان لدعم النمطين الفاتح والغامق */
         :root {
-            --primary-color: #2563eb;
-            --bg-color: #020617;
-            --text-color: #ffffff;
-            --card-bg: rgba(255, 255, 255, 0.05);
-            --border-color: rgba(255, 255, 255, 0.1);
+            --primary-blue: #3b82f6;
+            --soft-blue: #60a5fa;
+            --bg-dark: #020617;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.1);
         }
 
-        .light-theme {
-            --bg-color: #f8fafc;
-            --text-color: #0f172a;
-            --card-bg: #ffffff;
-            --border-color: #e2e8f0;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Tajawal', sans-serif; }
+        body { background-color: var(--bg-dark); color: white; overflow-x: hidden; scroll-behavior: smooth; line-height: 1.8; }
+
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; }
+
+        /* الشعار والقسم الرئيسي */
+        .hero {
+            height: 85vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            text-align: center; padding: 20px;
         }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Tajawal', sans-serif;
-            margin: 0;
-            transition: all 0.3s ease;
+        .main-logo {
+            font-size: 7rem; margin-bottom: 20px;
+            filter: drop-shadow(0 0 30px var(--primary-blue));
+            animation: float 4s infinite ease-in-out;
         }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-25px); } }
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 5%;
-            background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border-color);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; margin-bottom: 15px; }
+        .hero p { font-size: 1.3rem; color: #94a3b8; max-width: 800px; }
+
+        /* عرض الميزات المطور */
+        .features-container { padding: 60px 20px; max-width: 1250px; margin: 0 auto; }
+        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 30px; }
+        
+        .feature-card {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 40px; border-radius: 45px; backdrop-filter: blur(15px);
+            transition: 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            text-align: right; position: relative; overflow: hidden;
         }
-
-        .logo {
-            font-size: 1.5rem;
-            font-weight: 900;
-            color: var(--primary-color);
-            text-decoration: none;
+        .feature-card:hover {
+            transform: translateY(-15px); border-color: var(--primary-blue);
+            background: rgba(59, 130, 246, 0.05);
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
         }
+        .feature-card h3 { color: var(--soft-blue); font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
+        .feature-card p { color: #cbd5e1; font-size: 1.1rem; }
 
-        .nav-actions {
-            display: flex;
-            gap: 15px;
-            align-items: center;
+        /* قسم المقال - لوحات فخمة */
+        .article-wrap { max-width: 1000px; margin: 80px auto; padding: 0 20px; }
+        .info-box {
+            background: var(--glass); border: 1px solid var(--glass-border);
+            padding: 50px; border-radius: 60px; margin-bottom: 50px;
+            border-right: 8px solid var(--primary-blue);
         }
+        .info-box h2 { font-size: 2.3rem; margin-bottom: 30px; color: white; }
+        .info-box p { font-size: 1.25rem; color: #cbd5e1; margin-bottom: 25px; }
+        .highlight { color: var(--soft-blue); font-weight: bold; }
 
-        .user-profile {
-            display: none; /* يظهر فقط بعد تسجيل الدخول */
-            align-items: center;
-            gap: 10px;
-        }
-
-        .user-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            border: 2px solid var(--primary-color);
-        }
-
-        .ai-tracker-bar {
-            background: linear-gradient(90deg, var(--primary-color), transparent);
-            padding: 10px 5%;
-            font-size: 0.9rem;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .hero-section {
-            text-align: center;
-            padding: 100px 5%;
-        }
-
-        .btn-main {
-            padding: 12px 30px;
-            border-radius: 50px;
-            border: none;
-            background: var(--primary-color);
-            color: white;
-            font-size: 1.1rem;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-            text-decoration: none;
-            display: inline-block;
-        }
-
-        .btn-main:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.4);
-        }
-
-        #g_id_signin {
-            margin-top: 10px;
+        /* الشات بوت */
+        .chat-btn {
+            position: fixed; bottom: 35px; left: 35px; width: 70px; height: 70px;
+            background: var(--primary-blue); border-radius: 22px; display: flex;
+            align-items: center; justify-content: center; font-size: 2.2rem;
+            cursor: pointer; box-shadow: 0 15px 35px rgba(59, 130, 246, 0.3); z-index: 1000;
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo">🎓 مهنتي 2026</a>
-        
-        <div class="nav-actions">
-            <button onclick="toggleTheme()" class="btn-main" style="padding: 8px 15px; background: var(--card-bg); color: var(--text-color); border: 1px solid var(--border-color);">🌓</button>
-            
-            <div id="user-info" class="user-profile">
-                <span id="user-name"></span>
-                <img id="user-pic" class="user-avatar" src="" alt="User">
-                <button onclick="logout()" style="background:none; border:none; color:red; cursor:pointer; font-family:inherit;">خروج</button>
-            </div>
+    <canvas id="bg-canvas"></canvas>
 
-            <div id="g_id_onload"
-                 data-client_id="787882830858-pljl7lsv4h7dlfh53jggq2lc64klk4jp.apps.googleusercontent.com"
-                 data-callback="handleCredentialResponse"
-                 data-auto_prompt="false">
-            </div>
-            <div class="g_id_signin" data-type="standard"></div>
-        </div>
-    </header>
-
-    <div class="ai-tracker-bar" id="tracker">
-        🤖 الذكاء الاصطناعي: جاهز لتحليل مسارك المهني.. سجل دخولك للبدء.
-    </div>
-
-    <section class="hero-section">
-        <h1 style="font-size: 3rem; margin-bottom: 20px;">مستقبلك المهني يبدأ من هنا</h1>
-        <p style="font-size: 1.2rem; opacity: 0.8; max-width: 700px; margin: 0 auto 30px;">
-            منصة "مهنتي 2026" تستخدم أحدث تقنيات الذكاء الاصطناعي لتحليل مهاراتك وربطها بأفضل الجامعات في العالم.
-        </p>
-        <a href="assessment.html" class="btn-main">ابدأ اختبار التحليل الذكي</a>
+    <section class="hero">
+        <div class="main-logo">🎓</div>
+        <h1>موقع مهنتي 2026</h1>
+        <p>نحن لا نكتفي بمساعدتك في اختيار تخصصك، نحن نبني معك خارطة طريق مهنية متكاملة يقودها <span style="color:var(--soft-blue)">الذكاء الاصطناعي</span>.</p>
     </section>
 
+    <section class="features-container">
+        <div class="features-grid">
+            <div class="feature-card">
+                <h3><span>🧬</span> البصمة المهنية</h3>
+                <p>نظام تحليل متطور يغوص في أعماق مهاراتك الفطرية وميولك الشخصية ليحدد لك المسار الذي ستتفوق فيه، وليس المسار الذي تضطر لسلكه فقط.</p>
+            </div>
+            <div class="feature-card">
+                <h3><span>🔍</span> التنبؤ بسوق العمل</h3>
+                <p>بفضل خوارزميات <span class="highlight">الذكاء الاصطناعي</span>، نوفر لك رؤية مستقبلية للوظائف التي ستكون الأكثر طلباً وأعلى دخلاً في عام 2030 وما بعده.</p>
+            </div>
+            <div class="feature-card">
+                <h3><span>💬</span> المستشار الذكي</h3>
+                <p>تحدث مع خبيرنا التقني في أي وقت. إجابات فورية ودقيقة حول أفضل الجامعات، متطلبات التخصصات، وفرص العمل المتاحة عالمياً.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="article-wrap">
+        <div class="info-box">
+            <h2>رؤيتنا لمستقبلك المهني</h2>
+            <p>في تحديث 2026، قمنا بتحويل منصة "مهنتي" من مجرد موقع معلوماتي إلى مختبر ذكاء متكامل. نحن نؤمن أن التوجيه الصحيح هو مفتاح النجاح الاقتصادي والشخصي.</p>
+            <p>يعتمد الموقع كلياً على <span class="highlight">الذكاء الاصطناعي</span> لمعالجة البيانات الضخمة وتوفير نصائح مخصصة لكل مستخدم بناءً على مدخلاته، مما يلغي التخمينات العشوائية في اختيار المسار الجامعي.</p>
+        </div>
+
+        <div class="info-box">
+            <h2>التكنولوجيا والابتكار</h2>
+            <p>لقد دمجنا أحدث نماذج اللغة والمعالجة المنطقية لضمان أن تكون تجربة المستخدم سلسة ومفيدة. التحديث القادم سيتضمن ميزات الواقع المدمج لتجربة بيئات العمل افتراضياً.</p>
+        </div>
+    </section>
+
+    <div class="chat-btn" onclick="toggleChat()">🤖</div>
+
     <script>
-        // 1. نظام تبديل النمط
-        function toggleTheme() {
-            document.body.classList.toggle('light-theme');
-            const isLight = document.body.classList.contains('light-theme');
-            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+        // خلفية النجوم الهادئة
+        const canvas = document.getElementById('bg-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        window.addEventListener('resize', resize); resize();
+
+        class Part {
+            constructor() { this.reset(); }
+            reset() { this.x = Math.random()*canvas.width; this.y = Math.random()*canvas.height; this.s = Math.random()*1.5; this.v = Math.random()*0.4; }
+            update() { this.y -= this.v; if(this.y < 0) this.reset(); }
+            draw() { ctx.fillStyle = 'rgba(96, 165, 250, 0.3)'; ctx.beginPath(); ctx.arc(this.x,this.y,this.s,0,7); ctx.fill(); }
         }
+        for(let i=0; i<100; i++) particles.push(new Part());
+        function animate() { ctx.clearRect(0,0,canvas.width,canvas.height); particles.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(animate); }
+        animate();
 
-        // استعادة النمط المفضل للمستخدم
-        if (localStorage.getItem('theme') === 'light') {
-            document.body.classList.add('light-theme');
-        }
-
-        // 2. معالجة دخول جوجل
-        function handleCredentialResponse(response) {
-            // فك تشفير البيانات القادمة من جوجل (JWT)
-            const responsePayload = parseJwt(response.credential);
-
-            // تحديث الواجهة
-            document.querySelector('.g_id_signin').style.display = 'none';
-            const userInfo = document.getElementById('user-info');
-            userInfo.style.display = 'flex';
-            document.getElementById('user-name').innerText = responsePayload.name;
-            document.getElementById('user-pic').src = responsePayload.picture;
-
-            // تتبع الذكاء الاصطناعي
-            document.getElementById('tracker').innerText = `🤖 مرحباً ${responsePayload.given_name}، سأقوم الآن بتخصيص النتائج بناءً على ملفك الشخصي.`;
-            
-            // حفظ البيانات في LocalStorage لتعمل في الصفحات الأخرى
-            localStorage.setItem('userLoggedIn', 'true');
-            localStorage.setItem('userName', responsePayload.name);
-            localStorage.setItem('userPic', responsePayload.picture);
-        }
-
-        function parseJwt(token) {
-            var base64Url = token.split('.')[1];
-            var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
-                return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-            }).join(''));
-            return JSON.parse(jsonPayload);
-        }
-
-        function logout() {
-            localStorage.clear();
-            location.reload();
-        }
-
-        // 3. التحقق من الدخول عند تحميل الصفحة
-        window.onload = function() {
-            if (localStorage.getItem('userLoggedIn') === 'true') {
-                document.querySelector('.g_id_signin').style.display = 'none';
-                const userInfo = document.getElementById('user-info');
-                userInfo.style.display = 'flex';
-                document.getElementById('user-name').innerText = localStorage.getItem('userName');
-                document.getElementById('user-pic').src = localStorage.getItem('userPic');
-            }
-        }
+        function toggleChat() { alert('سيتم تفعيل المستشار المدعوم بالذكاء الاصطناعي فوراً!'); }
     </script>
 </body>
 </html>
+
